@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Table{% endblock %}
+
+{% block stylesheets %}
+    {# Inclure le CSS MDB #}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div data-mdb-input-init class="form-outline mb-4">
+        <input type="text" class="form-control" id="datatable-search-input"/>
+        <label class="form-label" for="datatable-search-input">Search</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="searchOption" id="searchByTitle" value="title" checked>
+        <label class="form-check-label" for="searchByTitle">Title</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="searchOption" id="searchByAuthor" value="author">
+        <label class="form-check-label" for="searchByAuthor">Author</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="searchOption" id="searchByCategory" value="category">
+        <label class="form-check-label" for="searchByCategory">Category</label>
+    </div>
+
+    <table id="datatable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Catégorie</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.titre }}</td>
+                    <td>{{ book.auteur }}</td>
+                    <td>{{ book.description }}</td>
+                    <td>{{ book.prix }}</td>
+                    <td>{{ book.categorie }}</td>
+                    <td><img src="{{ book.image }}" alt="{{ book.titre }}" width="50"></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById('datatable-search-input');
+            const searchOptionInputs = document.querySelectorAll('input[name="searchOption"]');
+            const rows = document.querySelectorAll('#datatable tbody tr');
+
+            function searchTable(query, searchBy) {
+                const sanitizedQuery = query.trim().toLowerCase();
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    let found = false;
+                    cells.forEach(cell => {
+                        if ((searchBy === 'title' && cell.cellIndex === 0) || (searchBy === 'author' && cell.cellIndex === 1) || (searchBy === 'category' && cell.cellIndex === 4)) {
+                            if (cell.textContent.trim().toLowerCase().includes(sanitizedQuery)) {
+                                found = true;
+                            }
+                        }
+                    });
+                    row.style.display = found ? 'table-row' : 'none';
+                });
+            }
+
+            searchInput.addEventListener('input', () => {
+                const selectedSearchOption = document.querySelector('input[name="searchOption"]:checked').value;
+                searchTable(searchInput.value, selectedSearchOption);
+            });
+
+            searchOptionInputs.forEach(input => {
+                input.addEventListener('change', () => {
+                    searchTable(searchInput.value, input.value);
+                });
+            });
+        });
+    </script>
+{% endblock %}

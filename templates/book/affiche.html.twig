@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ livre.titre }}
+{% endblock %}
+{% block body %}
+
+	<style>
+		.imgdetail {
+			width: 400px;
+            height: 400px;
+             /* margin-left:20px; */
+             margin:20px;
+            
+
+		}
+          span {
+        display: flex;
+    }
+  .textForme{
+   margin-right:-80px!important;
+  }
+
+  .formMarge{
+    margin-top:30px;
+  }
+
+	</style>
+
+	{# <div class="example-wrapper">
+			<h1>Liste des articles</h1>
+	
+			<ul>
+				<li>
+	                <h3> <img src="{{livre.image }}" alt=""></h3>
+					<h3>
+						libelle:
+						{{livre.titre }}</h3>
+					<p>reference:
+						{{ livre.auteur }}</p>
+					<p>
+						prix:{{ livre.description }}</p>
+				</li>
+				<a href="{{path('app_article')}}">
+	            <a href="#"></a>
+					liste des articles</a>
+			</ul>
+		</div> #}
+
+
+	<!-- Keep bootstrap horizontal card on mobile as well -->
+	<div class="card2 card  ">
+		<div class="row align-items-center  ">
+			<div class="col-sm-4 col-5">
+				<img src="{{livre.image }}" class="imgdetail" alt="...">
+			</div>
+			<div class="col-sm-8 col-7">
+				<div class="card-body  ">
+                   
+                      <span>
+                      <h2> Titre :</h2>
+                      <h2 class="card-title">{{livre.titre }}</h2>
+                      </span>
+                    
+				      <span>
+                      <h2> Auteur :</h2>
+                      <h2> {{ livre.auteur }} </h2>
+                      </span>
+
+                      <span>
+                      <h2>Description : </h2>
+                      <h2>{{ livre.description }}</h2>
+                      </span>
+
+                      <span>
+                      <h2> Prix :</h2>
+                      <h2>{{ livre.prix }} </h2>
+                      </span>
+					
+						
+				
+					{# <p class="card-text d-none d-sm-block"><small class="text-muted">{{ livre.description }}</small></p> #}
+                    <a href=" {{path('cart_add',{id:livre.id})}}" class="btn btn-primary colorbtn formMarge">Ajouter au panier</a>
+                  
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

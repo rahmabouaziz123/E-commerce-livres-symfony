@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Book{% endblock %}
+
+ {% block stylesheets %}<link rel="stylesheet" href="{{ asset('assets/css/custom-form.css') }}">{% endblock %}
+
+
+{% block body %}
+    <h1>Create new Book</h1>
+
+    {{ include('product/_form.html.twig') }} 
+
+   
+    {# <a href="{{ path('app_product_index') }}">back to list</a> #}
+        <a href="{{ path('app_product_index') }}"> <button type="button" class="btn btn-primary">back to list</button></a>
+    
+{% endblock %}

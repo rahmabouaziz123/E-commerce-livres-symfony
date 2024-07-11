@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book index{% endblock %}
+
+
+
+{% block stylesheets %}
+   
+    <style>
+        /* Styles personnalisés */
+        .divSpan {
+            display: flex;
+            
+        
+        }
+    .btnshow{
+        margin-right:5px;
+    }
+
+    .btncreate{
+        margin-left:30px;
+    }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Book index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Categorie</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.titre }}</td>
+                <td>{{ book.auteur }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.prix }}</td>
+                <td>{{ book.categorie }}</td>
+                <td>{{ book.image }}</td>
+                <td>
+                    {# <a href="{{ path('app_product_show', {'id': book.id}) }}">show</a>
+                    <a href="{{ path('app_product_edit', {'id': book.id}) }}">edit</a> #}
+
+                    <span class="divSpan">
+                     <a href="{{ path('app_product_show', {'id': book.id}) }}">  <button type="button" class="btn btn-primary btnshow">show</button></a>
+                    <a href="{{ path('app_product_edit', {'id': book.id}) }}"> <button type="button" class="btn btn-warning">Edit</button></a>
+                    </span>
+
+                 
+
+             
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_product_new') }}">Create new</a> #}
+   <a href="{{ path('app_product_new') }}">        
+
+<button type="button" class="btn btn-primary btncreate">Create new</button> </a>
+
+{% endblock %}
